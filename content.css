@@ -1,0 +1,356 @@
+/* Visual Scraper Pro - Content Styles */
+
+.vsp-highlight {
+  outline: 2px dashed #6366f1 !important;
+  outline-offset: 2px !important;
+  background-color: rgba(99, 102, 241, 0.08) !important;
+  cursor: crosshair !important;
+  transition: all 0.1s ease !important;
+}
+
+.vsp-highlight:hover {
+  outline: 2px solid #6366f1 !important;
+  background-color: rgba(99, 102, 241, 0.15) !important;
+}
+
+.vsp-selected {
+  outline: 2px solid #10b981 !important;
+  outline-offset: 2px !important;
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  position: relative !important;
+}
+
+.vsp-selected::after {
+  content: attr(data-vsp-field) !important;
+  position: absolute !important;
+  top: -20px !important;
+  left: 0 !important;
+  background: #10b981 !important;
+  color: white !important;
+  font-size: 10px !important;
+  font-family: monospace !important;
+  padding: 2px 6px !important;
+  border-radius: 3px !important;
+  white-space: nowrap !important;
+  z-index: 999999 !important;
+  pointer-events: none !important;
+}
+
+.vsp-tooltip {
+  position: fixed !important;
+  background: rgba(15, 15, 25, 0.95) !important;
+  color: #e2e8f0 !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  z-index: 9999999 !important;
+  pointer-events: none !important;
+  max-width: 280px !important;
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+  line-height: 1.5 !important;
+}
+
+.vsp-tooltip .vsp-tag {
+  color: #818cf8 !important;
+  font-weight: 600 !important;
+}
+
+.vsp-tooltip .vsp-text {
+  color: #94a3b8 !important;
+  font-size: 11px !important;
+  margin-top: 3px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 240px !important;
+  display: block !important;
+}
+
+.vsp-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0,0,0,0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  z-index: 99999998 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.vsp-modal {
+  background: #1e1e2e !important;
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 28px !important;
+  width: 380px !important;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  color: #e2e8f0 !important;
+}
+
+.vsp-modal h3 {
+  margin: 0 0 6px 0 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #f1f5f9 !important;
+}
+
+.vsp-modal p {
+  margin: 0 0 20px 0 !important;
+  font-size: 13px !important;
+  color: #94a3b8 !important;
+}
+
+.vsp-modal label {
+  display: block !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #94a3b8 !important;
+  margin-bottom: 6px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.vsp-modal input, .vsp-modal select {
+  width: 100% !important;
+  background: #0f0f1a !important;
+  border: 1px solid rgba(99, 102, 241, 0.2) !important;
+  border-radius: 8px !important;
+  color: #e2e8f0 !important;
+  font-size: 14px !important;
+  padding: 10px 14px !important;
+  margin-bottom: 16px !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  font-family: inherit !important;
+}
+
+.vsp-modal input:focus, .vsp-modal select:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+}
+
+.vsp-modal select option {
+  background: #1e1e2e !important;
+}
+
+.vsp-preview-box {
+  background: #0f0f1a !important;
+  border: 1px solid rgba(99, 102, 241, 0.15) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 12px !important;
+  color: #64748b !important;
+  margin-bottom: 20px !important;
+  word-break: break-all !important;
+}
+
+.vsp-preview-box span {
+  color: #a5b4fc !important;
+  font-weight: 500 !important;
+}
+
+.vsp-btn-row {
+  display: flex !important;
+  gap: 10px !important;
+}
+
+.vsp-btn {
+  flex: 1 !important;
+  padding: 10px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  transition: all 0.15s !important;
+}
+
+.vsp-btn-cancel {
+  background: rgba(255,255,255,0.05) !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+.vsp-btn-cancel:hover {
+  background: rgba(255,255,255,0.08) !important;
+}
+
+.vsp-btn-confirm {
+  background: #6366f1 !important;
+  color: white !important;
+}
+
+.vsp-btn-confirm:hover {
+  background: #4f46e5 !important;
+}
+
+.vsp-badge {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(15, 15, 25, 0.97) !important;
+  border: 1px solid rgba(99, 102, 241, 0.4) !important;
+  border-radius: 50px !important;
+  padding: 10px 20px !important;
+  font-size: 13px !important;
+  color: #e2e8f0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  z-index: 9999997 !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  white-space: nowrap !important;
+}
+
+.vsp-badge-dot {
+  width: 8px !important;
+  height: 8px !important;
+  background: #10b981 !important;
+  border-radius: 50% !important;
+  animation: vsp-pulse 1.5s infinite !important;
+}
+
+@keyframes vsp-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.vsp-badge kbd {
+  background: rgba(99, 102, 241, 0.2) !important;
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
+  border-radius: 4px !important;
+  padding: 1px 6px !important;
+  font-size: 11px !important;
+  font-family: monospace !important;
+  color: #a5b4fc !important;
+}
+
+/* ---- Results Panel ---- */
+
+#vsp-results-panel {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 280px !important;
+  background: #0f0f1a !important;
+  border-top: 2px solid rgba(99, 102, 241, 0.4) !important;
+  z-index: 9999990 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.5) !important;
+}
+
+#vsp-panel-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 16px !important;
+  background: #1e1e2e !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  flex-shrink: 0 !important;
+}
+
+#vsp-panel-body {
+  flex: 1 !important;
+  overflow: auto !important;
+  padding: 0 !important;
+}
+
+#vsp-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 12px !important;
+  color: #cbd5e1 !important;
+}
+
+#vsp-table thead {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1 !important;
+}
+
+#vsp-table th {
+  background: #16213e !important;
+  color: #818cf8 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  padding: 8px 12px !important;
+  text-align: left !important;
+  border-bottom: 1px solid rgba(99,102,241,0.2) !important;
+  white-space: nowrap !important;
+}
+
+#vsp-table td {
+  padding: 7px 12px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  max-width: 220px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+  color: #e2e8f0 !important;
+}
+
+#vsp-table tr:hover td {
+  background: rgba(99,102,241,0.06) !important;
+}
+
+#vsp-table tr:nth-child(even) td {
+  background: rgba(255,255,255,0.015) !important;
+}
+
+#vsp-table tr:nth-child(even):hover td {
+  background: rgba(99,102,241,0.06) !important;
+}
+
+.vsp-panel-btn {
+  padding: 5px 12px !important;
+  border-radius: 6px !important;
+  border: 1px solid transparent !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  letter-spacing: 0.04em !important;
+  transition: all 0.15s !important;
+}
+
+.vsp-panel-btn-green {
+  background: rgba(16,185,129,0.15) !important;
+  border-color: rgba(16,185,129,0.3) !important;
+  color: #34d399 !important;
+}
+
+.vsp-panel-btn-green:hover {
+  background: rgba(16,185,129,0.25) !important;
+}
+
+.vsp-panel-btn-blue {
+  background: rgba(99,102,241,0.15) !important;
+  border-color: rgba(99,102,241,0.3) !important;
+  color: #818cf8 !important;
+}
+
+.vsp-panel-btn-blue:hover {
+  background: rgba(99,102,241,0.25) !important;
+}
+
+.vsp-panel-btn-red {
+  background: rgba(239,68,68,0.1) !important;
+  border-color: rgba(239,68,68,0.2) !important;
+  color: #f87171 !important;
+}
+
+.vsp-panel-btn-red:hover {
+  background: rgba(239,68,68,0.2) !important;
+}

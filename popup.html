@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visual Scraper Pro</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 360px;
+      min-height: 480px;
+      background: #0f0f1a;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1e1e2e 0%, #16163a 100%);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+      padding: 16px 18px 14px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #6366f1, #818cf8);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .logo-text h1 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1;
+    }
+
+    .logo-text p {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #475569;
+      transition: background 0.3s;
+    }
+
+    .status-dot.active { background: #10b981; animation: pulse 1.5s infinite; }
+    .status-dot.ready { background: #6366f1; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    #status-text { color: #94a3b8; }
+
+    /* Main content */
+    .content { padding: 16px 18px; }
+
+    /* Section */
+    .section { margin-bottom: 20px; }
+
+    .section-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #475569;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Fields list */
+    #fields-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .field-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 8px 10px;
+      transition: all 0.15s;
+    }
+
+    .field-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(99,102,241,0.2); }
+
+    .field-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #334155;
+    }
+
+    .field-status.mapped { background: #10b981; }
+
+    .field-name {
+      flex: 1;
+      font-size: 12px;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+
+    .field-type {
+      font-size: 10px;
+      color: #64748b;
+      background: rgba(255,255,255,0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .field-remove {
+      width: 18px;
+      height: 18px;
+      border: none;
+      background: none;
+      color: #475569;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.15s;
+    }
+
+    .field-remove:hover { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+    /* Add field row */
+    .add-field-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .input {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 12px;
+      padding: 8px 12px;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    .input:focus { border-color: rgba(99,102,241,0.5); background: rgba(99,102,241,0.05); }
+    .input::placeholder { color: #475569; }
+
+    .btn-add {
+      width: 34px;
+      height: 34px;
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: 8px;
+      color: #818cf8;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-add:hover { background: rgba(99,102,241,0.25); color: #a5b4fc; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 16px;
+      color: #475569;
+      font-size: 12px;
+      border: 1px dashed rgba(255,255,255,0.06);
+      border-radius: 8px;
+    }
+
+    .empty-state strong { display: block; color: #64748b; margin-bottom: 4px; }
+
+    /* Quick templates */
+    .templates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .template-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      color: #94a3b8;
+      font-size: 11px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .template-btn:hover { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); color: #a5b4fc; }
+
+    /* Action buttons */
+    .actions { display: flex; flex-direction: column; gap: 8px; }
+
+    .btn {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #818cf8);
+      color: white;
+      box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.25);
+      color: #34d399;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(16,185,129,0.2);
+    }
+
+    .btn-danger {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.2);
+      color: #f87171;
+    }
+
+    .btn-danger:hover:not(:disabled) { background: rgba(239,68,68,0.15); }
+
+    .btn-stop {
+      background: rgba(251,146,60,0.12);
+      border: 1px solid rgba(251,146,60,0.25);
+      color: #fb923c;
+    }
+
+    /* Results preview */
+    .results-preview {
+      background: rgba(16,185,129,0.06);
+      border: 1px solid rgba(16,185,129,0.15);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .results-count {
+      font-size: 22px;
+      font-weight: 700;
+      color: #10b981;
+      line-height: 1;
+    }
+
+    .results-label { font-size: 11px; color: #64748b; }
+
+    .results-fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .result-field-tag {
+      font-size: 10px;
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.2);
+      color: #34d399;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Export buttons */
+    .export-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-export {
+      padding: 9px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-export:hover { background: rgba(255,255,255,0.07); color: #cbd5e1; border-color: rgba(255,255,255,0.15); }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.05);
+      margin: 4px 0 16px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(30,30,46,0.97);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12px;
+      color: #a5b4fc;
+      opacity: 0;
+      transition: all 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">🕷️</div>
+      <div class="logo-text">
+        <h1>Visual Scraper Pro</h1>
+        <p>Extract data from any webpage</p>
+      </div>
+    </div>
+    <div class="status-bar">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Ready to start</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Active session view -->
+    <div id="view-active" class="hidden">
+      <div class="section">
+        <div class="section-title">Defined fields</div>
+        <div id="active-fields-list"></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-secondary" id="btn-scrape-all">
+          ⚡ Extract all data
+        </button>
+        <button class="btn btn-stop" id="btn-stop">
+          ⏹ Pause selection
+        </button>
+      </div>
+    </div>
+
+    <!-- Default view -->
+    <div id="view-default">
+
+      <!-- Fields config -->
+      <div class="section">
+        <div class="section-title">Fields to extract</div>
+        <div id="fields-list">
+          <div class="empty-state">
+            <strong>No fields yet</strong>
+            Add fields manually or pick a template
+          </div>
+        </div>
+        <div class="add-field-row" style="margin-top:8px">
+          <input type="text" class="input" id="field-input" placeholder="Field name (e.g. price, title...)" />
+          <button class="btn-add" id="btn-add-field" title="Add field">+</button>
+        </div>
+      </div>
+
+      <!-- Templates -->
+      <div class="section">
+        <div class="section-title">Quick templates</div>
+        <div class="templates">
+          <button class="template-btn" data-tpl="ecommerce">🛒 E-commerce</button>
+          <button class="template-btn" data-tpl="blog">📝 Blog / News</button>
+          <button class="template-btn" data-tpl="jobs">💼 Job listings</button>
+          <button class="template-btn" data-tpl="contacts">👤 Contacts</button>
+          <button class="template-btn" data-tpl="realestate">🏠 Real estate</button>
+        </div>
+      </div>
+
+      <!-- Start button -->
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-start" disabled>
+          🎯 Start visual selection
+        </button>
+      </div>
+
+      <!-- Results section (shown after scraping) -->
+      <div id="results-section" class="hidden">
+        <div class="divider"></div>
+        <div class="section">
+          <div class="section-title">Results</div>
+          <div class="results-preview">
+            <div class="results-header">
+              <div>
+                <div class="results-count" id="results-count">0</div>
+                <div class="results-label">records extracted</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-size:11px;color:#64748b" id="results-url"></div>
+              </div>
+            </div>
+            <div class="results-fields" id="results-fields"></div>
+          </div>
+          <div class="export-row">
+            <button class="btn-export" id="btn-export-csv">
+              📊 Export CSV
+            </button>
+            <button class="btn-export" id="btn-export-json">
+              { } Export JSON
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-danger" id="btn-clear" style="margin-top:4px">
+          🗑 Clear and start over
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
